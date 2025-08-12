@@ -1,0 +1,28 @@
+data:
+  dataset: Shapes3D
+  filepath: /mnt/cephfs/home/voz/shared/database/disentanglement/3dshapes.h5
+  n_samples: 10000
+
+encoder1:
+  arch: mlp-flatten
+  hidden_layer_sizes: [4096, 2048, 2048, 1024, 1024]
+  output_dim: 512
+  
+encoder2:
+  arch: mlp
+  hidden_layer_sizes: [16, 16, 8, 8, 16, 16]
+
+training:
+  n_epochs: 50
+  save_epochs: 50
+  batch_size: &batch_size 128
+  optimizer:
+    optimizer: Adam
+    base_lr: 0.001
+    weight_decay: 0.0001
+    base_batch_size: 128
+    batch_size: *batch_size
+  scheduler:
+    scheduler: StepLR
+    step_size: 20
+    gamma: 0.3

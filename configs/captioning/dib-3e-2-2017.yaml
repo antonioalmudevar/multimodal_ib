@@ -1,0 +1,58 @@
+data:
+  num_workers: 8
+  kwargs:
+    vision:
+      image_size: 224
+      batch_size: 128
+      train_dir: /mnt/cephfs/home/voz/shared/database/coco2017/images/train2017
+      val_dir: /mnt/cephfs/home/voz/shared/database/coco2017/images/val2017
+      train_json: /mnt/cephfs/home/voz/shared/database/coco2017/annotations/captions_train2017.json
+      val_json: /mnt/cephfs/home/voz/shared/database/coco2017/annotations/captions_val2017.json
+
+aligner:
+  aligner_name: DETERMINISTIC-IB
+  aligner_kwargs: 
+    lambda_cos_sim: 0.03
+    encoders_kwargs:
+      vision:
+        model_name: eva_clip_g
+        freeze: True
+        img_size: 224
+        drop_path_rate: 0
+        use_grad_checkpoint: False
+        precision: fp16
+    num_query_token: 32
+    cross_attention_freq: 2
+    embed_dim: 256
+    max_txt_len: 32
+    qformer_path: bert-base-uncased
+
+training:
+  n_epochs: 50
+  save_epochs: 1
+  optimizer_name: Adam
+  optimizer_kwargs:
+    lr: 0.0001
+    betas: [0.9, 0.999]
+  scheduler_name: cosine_schedule_with_warmup
+  scheduler_kwargs: 
+    num_warmup_steps: 1000
+    num_training_steps: 50000
+  fp16: True 
+  log_every_n_steps: 200
+  val_check_interval: 1000
+  
+training_lm:
+  optimizer_name: Adam
+  optimizer_kwargs:
+    lr: 0.0002
+    betas: [0.9, 0.999]
+  scheduler_name: cosine_schedule_with_warmup
+  scheduler_kwargs: 
+    num_warmup_steps: 500
+    num_training_steps: 50000
+  fp16: True 
+  log_every_n_steps: 200
+  val_check_interval: 1000
+
+seed: 42

@@ -1,0 +1,26 @@
+data:
+  dataset: MPI3D
+  filepath: /mnt/cephfs/home/voz/shared/database/disentanglement/mpi3d/mpi3d_real.npz
+  n_samples: 10000
+
+encoder1:
+  arch: resnet20
+  
+encoder2:
+  arch: mlp
+  hidden_layer_sizes: [128, 128, 64, 64, 128, 128]
+
+training:
+  temperature: 0.01
+  n_epochs: 50
+  save_epochs: 50
+  batch_size: &batch_size 128
+  optimizer:
+    optimizer: Adam
+    base_lr: 0.001
+    base_batch_size: 128
+    batch_size: *batch_size
+  scheduler:
+    scheduler: StepLR
+    step_size: 20
+    gamma: 0.3
