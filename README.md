@@ -16,7 +16,7 @@
 Contrastive losses maximize shared information but retain modality-specific content, causing misalignment. We formalize this with information theory and propose a lightweight regularizer to improve cross-modal representation alignment.
 
 <p align="center">
-  <img src="docs/abstract.png" width="550" alt="Method overview">
+  <img src="docs/abstract.svg" width="550" alt="Method overview">
 </p>
 
 
